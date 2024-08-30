@@ -30,17 +30,32 @@ const ModalSectionBg = styled.div`
 `;
 
 const ModalCardCloseButton = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: none;
+  user-select: none;
+  outline: none;
 
-  &::after {
+  &::after,
+  &:before {
     content: "";
+    position: absolute;
     width: 100%;
     height: 3px;
     background: black;
+    transform: rotate(-45deg);
+  }
+
+  &:after {
+    transform: rotate(45deg);
   }
 `;
 
@@ -49,7 +64,10 @@ type ModalCardProps = {
 };
 
 const ModalCard = styled.div<ModalCardProps>`
-  padding: 20px;
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  padding: 30px;
   box-sizing: border-box;
   background: white;
   z-index: 1;
