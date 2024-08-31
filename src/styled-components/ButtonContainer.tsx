@@ -1,11 +1,15 @@
-import styled from "styled-components";
+import styled, { CSSProperties } from "styled-components";
 
-export const ButtonContainer = styled.div`
+type ButtonContainerProps = {
+  $margintop?: CSSProperties["marginTop"];
+};
+
+export const ButtonContainer = styled.div<ButtonContainerProps>`
   flex: 1 1 100%;
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: 10px;
   display: flex;
-  margin-top: 20px;
+  margin-top: ${({ $margintop = "20px" }) => $margintop};
 `;

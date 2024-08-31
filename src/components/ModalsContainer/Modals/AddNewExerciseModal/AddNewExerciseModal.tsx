@@ -8,50 +8,23 @@ import {
   ModalTitle,
   TextArea,
 } from "../../../../styled-components";
-import { UseData, UseModalsContext } from "../../../../contexts";
-import { FormEvent, useState } from "react";
-import { ExerciseType } from "../../../../types";
-
-const formDefaultValues: ExerciseType = {
-  id: "",
-  name: "",
-  description: "",
-};
+import { UseAddNewExerciseModal } from "./UseAddNewExerciseModal";
 
 export const AddNewExerciseModal = () => {
-  const { addItem } = UseData("exercisesList");
-  const { updateModalIsOpen } = UseModalsContext("AddNewExerciseModal");
-  const [formValues, setFormValues] = useState(formDefaultValues);
-
-  const FormHandlerSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const newItemId = crypto.randomUUID();
-
-    const newItem = {
-      ...formValues,
-      id: newItemId,
-    };
-
-    addItem(newItem);
-
-    updateModalIsOpen(false);
-    setFormValues(formDefaultValues);
-  };
-
-  const FormItemsHandlerChange = (
-    inputName: keyof typeof formValues,
-    value: string
-  ) => {
-    setFormValues((prevState) => {
-      const updatedState = { ...prevState };
-      updatedState[inputName] = value;
-      return updatedState;
-    });
-  };
+  const {
+    formValues,
+    FormHandlerSubmit,
+    FormItemsHandlerChange,
+    updateModalOnClose,
+    updateModalOnOpen,
+  } = UseAddNewExerciseModal();
 
   return (
-    <Modal modalName="AddNewExerciseModal">
+    <Modal
+      modalName="AddNewExerciseModal"
+      onOpen={updateModalOnOpen}
+      onClose={updateModalOnClose}
+    >
       <ModalTitle>Novo Exercício</ModalTitle>
       <Form onSubmit={FormHandlerSubmit}>
         <Label>

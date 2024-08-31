@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { UseModalsContext } from "../../contexts";
 import * as ModalsList from "../ModalsContainer/Modals";
@@ -65,8 +65,9 @@ type ModalCardProps = {
 
 const ModalCard = styled.div<ModalCardProps>`
   position: relative;
-  width: 100%;
+  width: 90%;
   max-width: 500px;
+  max-height: 100%;
   padding: 30px;
   box-sizing: border-box;
   background: white;
@@ -81,16 +82,35 @@ const ModalCard = styled.div<ModalCardProps>`
 type ModalProps = {
   children?: ReactNode;
   modalName: keyof typeof ModalsList;
+  onOpen?: () => void;
+  onClose?: () => void;
 };
 
-export const Modal = ({ children, modalName }: ModalProps) => {
+export const Modal = ({ children, modalName, onClose, onOpen }: ModalProps) => {
   const { isOpen, updateModalIsOpen } = UseModalsContext(modalName);
+
+  const closeModalHandlerClick = () => {
+    updateModalIsOpen(false);
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  const openModalOnLoaded = useCallback(() => {
+    if (isOpen && onOpen) {
+      onOpen();
+    }
+  }, [isOpen, onOpen]);
+
+  useEffect(() => {
+    openModalOnLoaded();
+  }, [openModalOnLoaded]);
 
   return (
     <ModalSection $isopen={isOpen.toString()}>
-      <ModalSectionBg onClick={() => updateModalIsOpen()} />
+      <ModalSectionBg onClick={closeModalHandlerClick} />
       <ModalCard $isopen={isOpen.toString()}>
-        <ModalCardCloseButton onClick={() => updateModalIsOpen()} />
+        <ModalCardCloseButton onClick={closeModalHandlerClick} />
         {children}
       </ModalCard>
     </ModalSection>

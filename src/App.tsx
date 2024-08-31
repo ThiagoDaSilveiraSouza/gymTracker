@@ -1,17 +1,15 @@
 import { ModalsContainer } from "./components/ModalsContainer";
-import { DataContextProvider, ModalsContextProvider } from "./contexts";
+import { ModalsContextProvider } from "./contexts";
 import { GlobalStyle } from "./globalStyle";
-import { HomePage } from "./pages";
+import { ExercisesPage } from "./pages";
 
 function App() {
   return (
-    <DataContextProvider>
-      <ModalsContextProvider>
-        <GlobalStyle />
-        <HomePage />
-        <ModalsContainer />
-      </ModalsContextProvider>
-    </DataContextProvider>
+    <ModalsContextProvider>
+      <GlobalStyle />
+      <ExercisesPage />
+      <ModalsContainer />
+    </ModalsContextProvider>
   );
 }
 

@@ -51,10 +51,9 @@ export const UseModalsContext = (modalName: keyof typeof ModalsList) => {
   const [state, setState] = useContext(ModalsContext);
 
   const updateModalIsOpen = useCallback(
-    (isOpenState?: boolean) => {
+    (isOpenState: boolean) => {
       setState((prevState) => {
         const updatedState = { ...prevState };
-        console.log("prevState", prevState[modalName]);
         if (typeof isOpenState !== "undefined") {
           updatedState[modalName].isOpen = isOpenState;
         } else {
