@@ -3,6 +3,7 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
+  useCallback,
   useContext,
   useState,
 } from "react";
@@ -17,7 +18,7 @@ type ModalStatusProps = {
 };
 
 const ModalsStatusDefault: ModalStatusProps = {
-  AddDayExerciseModal: defaultStatus,
+  AddNewExerciseModal: defaultStatus,
 };
 
 type ModalsContextProps = [
@@ -49,19 +50,22 @@ export const ModalsContextProvider = ({
 export const UseModalsContext = (modalName: keyof typeof ModalsList) => {
   const [state, setState] = useContext(ModalsContext);
 
-  const updateModalIsOpen = (isOpenState?: boolean) => {
-    setState((prevState) => {
-      const updatedState = { ...prevState };
+  const updateModalIsOpen = useCallback(
+    (isOpenState?: boolean) => {
+      setState((prevState) => {
+        const updatedState = { ...prevState };
+        console.log("prevState", prevState[modalName]);
+        if (typeof isOpenState !== "undefined") {
+          updatedState[modalName].isOpen = isOpenState;
+        } else {
+          updatedState[modalName].isOpen = !updatedState[modalName].isOpen;
+        }
 
-      if (isOpenState) {
-        updatedState[modalName].isOpen = isOpenState;
-      } else {
-        updatedState[modalName].isOpen = !updatedState[modalName].isOpen;
-      }
-
-      return updatedState;
-    });
-  };
+        return updatedState;
+      });
+    },
+    [modalName, setState]
+  );
 
   return { ...state[modalName], updateModalIsOpen };
 };

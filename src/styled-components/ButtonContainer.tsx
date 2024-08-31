@@ -7,4 +7,5 @@ export const ButtonContainer = styled.div`
   flex-wrap: wrap;
   gap: 10px;
   display: flex;
+  margin-top: 20px;
 `;
