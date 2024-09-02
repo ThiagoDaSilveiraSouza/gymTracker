@@ -18,7 +18,7 @@ type ModalStatusProps = {
 };
 
 const ModalsStatusDefault: ModalStatusProps = {
-  AddNewExerciseModal: defaultStatus,
+  ExerciseModal: defaultStatus,
 };
 
 type ModalsContextProps = [

@@ -8,24 +8,25 @@ import {
   ModalTitle,
   TextArea,
 } from "../../../../styled-components";
-import { UseAddNewExerciseModal } from "./UseAddNewExerciseModal";
+import { UseExerciseModal } from "./UseExerciseModal";
 
-export const AddNewExerciseModal = () => {
+export const ExerciseModal = () => {
   const {
     formValues,
+    modalTitle,
     FormHandlerSubmit,
     FormItemsHandlerChange,
     updateModalOnClose,
     updateModalOnOpen,
-  } = UseAddNewExerciseModal();
+  } = UseExerciseModal();
 
   return (
     <Modal
-      modalName="AddNewExerciseModal"
+      modalName="ExerciseModal"
       onOpen={updateModalOnOpen}
       onClose={updateModalOnClose}
     >
-      <ModalTitle>Novo Exercício</ModalTitle>
+      <ModalTitle>{modalTitle.value}</ModalTitle>
       <Form onSubmit={FormHandlerSubmit}>
         <Label>
           Nome*

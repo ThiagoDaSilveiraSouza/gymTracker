@@ -5,44 +5,39 @@ import { useExercisesStore } from "../../store";
 import { IoIosAdd } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBinLine } from "react-icons/ri";
+const ListContainer = styled.div`
+  display: flex;
+  overflow: auto;
+  flex-wrap: wrap;
+  gap: 10px;
+  box-sizing: border-box;
+  margin: 30px 0 0;
+`;
 
-const Table = styled.table`
-  margin: 0 auto;
-  thead {
-    tr {
-      border-bottom: 1px solid;
-      padding: 10px 0;
-      th {
-        font-weight: 500;
-      }
-    }
-  }
-  tbody {
-    tr {
-      padding: 10px 0;
-      font-size: 13px;
-    }
-  }
-  tr {
-    display: flex;
-    gap: 10px;
-  }
-  th,
-  td {
-    display: flex;
-    align-items: start;
-    width: 200px;
-    overflow-x: auto;
+const ExerciseRow = styled.div`
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  background-color: var(--ligth-color-2);
+  padding: 5px;
+  span {
+    color: var(--dark-color-2);
+    font-weight: 400;
+    font-size: 14px;
+    flex: 1 1;
   }
 `;
 
 export const ExercisesPage = () => {
-  const { updateModalIsOpen } = UseModalsContext("AddNewExerciseModal");
-  const { exercises, removeExercise, setAciveToEditExercise } =
-    useExercisesStore();
+  const { updateModalIsOpen } = UseModalsContext("ExerciseModal");
+  const {
+    items: exercises,
+    removeItem: removeExercise,
+    setActiveToEditItem: setAciveToEditExercise,
+  } = useExercisesStore();
 
   return (
-    <section className="centralizer">
+    <section className="page-section centralizer">
       <PageTitle>Lista de Exercícios</PageTitle>
       <ButtonContainer>
         <Button
@@ -56,45 +51,30 @@ export const ExercisesPage = () => {
           <IoIosAdd />
         </Button>
       </ButtonContainer>
-      <Table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>descrição</th>
-            <th></th>
-            {/* <th>Ações</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {exercises.map((currentExercise) => {
-            const { id, name, description } = currentExercise;
+      <ListContainer>
+        {exercises.map((currentExercise) => {
+          const { id, name } = currentExercise;
 
-            return (
-              <tr key={id}>
-                <td>{name}</td>
-                <td>{description}</td>
-                <td>
-                  <ButtonContainer $margintop={"none"}>
-                    <Button
-                      onClick={() => {
-                        setAciveToEditExercise(currentExercise);
-                        updateModalIsOpen(true);
-                      }}
-                    >
-                      <CiEdit />
-                      Editar
-                    </Button>
-                    <Button onClick={() => removeExercise(id)} $type="delete">
-                      <RiDeleteBinLine />
-                      Remover
-                    </Button>
-                  </ButtonContainer>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+          return (
+            <ExerciseRow key={id}>
+              <span>{name}</span>
+              <ButtonContainer $margintop={"none"} $flex="0 1 auto">
+                <Button
+                  onClick={() => {
+                    setAciveToEditExercise(currentExercise);
+                    updateModalIsOpen(true);
+                  }}
+                >
+                  <CiEdit />
+                </Button>
+                <Button onClick={() => removeExercise(id)} $type="delete">
+                  <RiDeleteBinLine />
+                </Button>
+              </ButtonContainer>
+            </ExerciseRow>
+          );
+        })}
+      </ListContainer>
     </section>
   );
 };

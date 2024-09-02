@@ -1,14 +1,16 @@
-import { ModalsContainer } from "./components/ModalsContainer";
+import { ModalsContainer, SideMenu } from "./components";
 import { ModalsContextProvider } from "./contexts";
 import { GlobalStyle } from "./globalStyle";
-import { ExercisesPage } from "./pages";
+import { AppRoutes } from "./routes";
 
 function App() {
   return (
     <ModalsContextProvider>
       <GlobalStyle />
-      <ExercisesPage />
-      <ModalsContainer />
+      <AppRoutes>
+        <ModalsContainer />
+        <SideMenu />
+      </AppRoutes>
     </ModalsContextProvider>
   );
 }

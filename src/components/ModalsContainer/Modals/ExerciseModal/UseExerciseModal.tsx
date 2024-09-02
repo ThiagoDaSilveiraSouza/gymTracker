@@ -1,7 +1,12 @@
-import { FormEvent, useCallback, useState } from "react";
+import { FormEvent, useCallback, useMemo, useState } from "react";
 import { UseModalsContext } from "../../../../contexts";
 import { useExercisesStore } from "../../../../store";
 import { ExerciseType } from "../../../../types";
+
+type ModalTitlePayload = {
+  type: "save" | "edit" | "view";
+  value: string;
+};
 
 const formDefaultValues: ExerciseType = {
   id: "",
@@ -9,15 +14,35 @@ const formDefaultValues: ExerciseType = {
   description: "",
 };
 
-export const UseAddNewExerciseModal = () => {
-  const { updateModalIsOpen } = UseModalsContext("AddNewExerciseModal");
+export const UseExerciseModal = () => {
+  const { updateModalIsOpen } = UseModalsContext("ExerciseModal");
   const [formValues, setFormValues] = useState(formDefaultValues);
   const {
-    addExercise,
-    exerciseActiveToEdit,
-    setAciveToEditExercise,
-    updateExercise,
+    addItem: addExercise,
+    itemActiveToEdit: exerciseActiveToEdit,
+    itemActiveToView: exerciseActiveToView,
+    setActiveToEditItem: setAciveToEditExercise,
+    updateItem: updateExercise,
+    resetAllActives: resetAllAcives,
   } = useExercisesStore();
+
+  const modalTitle = useMemo(() => {
+    const payload: ModalTitlePayload = {
+      type: "save",
+      value: "Novo Exercício",
+    };
+
+    if (exerciseActiveToEdit) {
+      payload.type = "edit";
+      payload.value = exerciseActiveToEdit.name;
+    }
+    if (exerciseActiveToView) {
+      payload.type = "view";
+      payload.value = exerciseActiveToView.name;
+    }
+    return payload;
+  }, [exerciseActiveToEdit, exerciseActiveToView]);
+
   const updateModalOnOpen = useCallback(() => {
     if (exerciseActiveToEdit) {
       setFormValues(exerciseActiveToEdit);
@@ -48,7 +73,7 @@ export const UseAddNewExerciseModal = () => {
     }
 
     updateModalIsOpen(false);
-    setAciveToEditExercise();
+    resetAllAcives();
   };
 
   const FormItemsHandlerChange = (
@@ -63,6 +88,7 @@ export const UseAddNewExerciseModal = () => {
   };
   return {
     formValues,
+    modalTitle,
     updateModalOnOpen,
     updateModalOnClose,
     FormHandlerSubmit,

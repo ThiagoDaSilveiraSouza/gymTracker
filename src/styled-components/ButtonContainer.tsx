@@ -2,10 +2,11 @@ import styled, { CSSProperties } from "styled-components";
 
 type ButtonContainerProps = {
   $margintop?: CSSProperties["marginTop"];
+  $flex?: CSSProperties["flex"];
 };
 
 export const ButtonContainer = styled.div<ButtonContainerProps>`
-  flex: 1 1 100%;
+  flex: ${({ $flex = "1 1 100%" }) => $flex};
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
