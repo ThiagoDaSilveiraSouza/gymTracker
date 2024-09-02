@@ -1,4 +1,3 @@
-// src/Modal.test.tsx
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Modal } from "./Modal";
 import { UseModalsContext } from "../../contexts";
