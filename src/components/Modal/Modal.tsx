@@ -108,9 +108,9 @@ export const Modal = ({ children, modalName, onClose, onOpen }: ModalProps) => {
 
   return (
     <ModalSection $isopen={isOpen.toString()}>
-      <ModalSectionBg onClick={closeModalHandlerClick} />
+      <ModalSectionBg onClick={closeModalHandlerClick} data-testid="modal-bg"/>
       <ModalCard $isopen={isOpen.toString()}>
-        <ModalCardCloseButton onClick={closeModalHandlerClick} />
+        <ModalCardCloseButton onClick={closeModalHandlerClick} data-testid="modal-close-button"/>
         {children}
       </ModalCard>
     </ModalSection>
