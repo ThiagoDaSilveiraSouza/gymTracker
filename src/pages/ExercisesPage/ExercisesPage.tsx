@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { UseModalsContext } from "../../contexts";
 import { Button, ButtonContainer, PageTitle } from "../../styled-components";
 import { useExercisesStore } from "../../store";
 import { IoIosAdd } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useModalStore } from "../../store/useModalsStore";
 const ListContainer = styled.div`
   display: flex;
   overflow: auto;
@@ -29,7 +29,7 @@ const ExerciseRow = styled.div`
 `;
 
 export const ExercisesPage = () => {
-  const { updateModalIsOpen } = UseModalsContext("ExerciseModal");
+  const { updateModalIsOpen } = useModalStore();
   const {
     items: exercises,
     removeItem: removeExercise,
@@ -43,7 +43,7 @@ export const ExercisesPage = () => {
         <Button
           onClick={() => {
             setAciveToEditExercise(undefined);
-            updateModalIsOpen(true);
+            updateModalIsOpen("ExerciseModal", true);
           }}
           $type="add"
         >
@@ -62,7 +62,7 @@ export const ExercisesPage = () => {
                 <Button
                   onClick={() => {
                     setAciveToEditExercise(currentExercise);
-                    updateModalIsOpen(true);
+                    updateModalIsOpen("ExerciseModal", true);
                   }}
                 >
                   <CiEdit />

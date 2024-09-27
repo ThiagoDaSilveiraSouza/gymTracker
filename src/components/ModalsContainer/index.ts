@@ -1,1 +1,1 @@
-export * from "./ModalsContainer"
+export * from "./ModalsContainer";

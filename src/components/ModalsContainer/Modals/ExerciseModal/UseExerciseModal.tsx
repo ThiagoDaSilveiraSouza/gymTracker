@@ -1,7 +1,7 @@
 import { FormEvent, useCallback, useMemo, useState } from "react";
-import { UseModalsContext } from "../../../../contexts";
 import { useExercisesStore } from "../../../../store";
 import { ExerciseType } from "../../../../types";
+import { useModalStore } from "../../../../store/useModalsStore";
 
 type ModalTitlePayload = {
   type: "save" | "edit" | "view";
@@ -15,7 +15,7 @@ const formDefaultValues: ExerciseType = {
 };
 
 export const UseExerciseModal = () => {
-  const { updateModalIsOpen } = UseModalsContext("ExerciseModal");
+  const { updateModalIsOpen } = useModalStore();
   const [formValues, setFormValues] = useState(formDefaultValues);
   const {
     addItem: addExercise,
@@ -72,7 +72,7 @@ export const UseExerciseModal = () => {
       addExercise(newItem);
     }
 
-    updateModalIsOpen(false);
+    updateModalIsOpen("ExerciseModal", false);
     resetAllAcives();
   };
 

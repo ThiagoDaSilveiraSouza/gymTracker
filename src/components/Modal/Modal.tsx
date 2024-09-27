@@ -1,10 +1,11 @@
 import { ReactNode, useCallback, useEffect } from "react";
-import styled from "styled-components";
-import { UseModalsContext } from "../../contexts";
+import styled, { CSSProperties } from "styled-components";
 import * as ModalsList from "../ModalsContainer/Modals";
+import { useModalStore } from "../../store/useModalsStore";
 
 type ModalSectionProps = {
   $isopen: string;
+  $zIndex?: number;
 };
 
 const ModalSection = styled.div<ModalSectionProps>`
@@ -16,7 +17,7 @@ const ModalSection = styled.div<ModalSectionProps>`
   align-items: center;
   width: 100%;
   height: 100%;
-  z-index: 1000;
+  z-index: ${({ $zIndex = -1 }) => $zIndex + 1000};
   visibility: ${({ $isopen }) => ($isopen === "true" ? "visible" : "hidden")};
   opacity: ${({ $isopen }) => ($isopen === "true" ? "1" : "0")};
   transition: 0.3s;
@@ -87,10 +88,10 @@ type ModalProps = {
 };
 
 export const Modal = ({ children, modalName, onClose, onOpen }: ModalProps) => {
-  const { isOpen, updateModalIsOpen } = UseModalsContext(modalName);
-
+  const { status, updateModalIsOpen } = useModalStore();
+  const { isOpen, historyIndex } = status[modalName];
   const closeModalHandlerClick = () => {
-    updateModalIsOpen(false);
+    updateModalIsOpen(modalName, false);
     if (onClose) {
       onClose();
     }
@@ -107,10 +108,13 @@ export const Modal = ({ children, modalName, onClose, onOpen }: ModalProps) => {
   }, [openModalOnLoaded]);
 
   return (
-    <ModalSection $isopen={isOpen.toString()}>
-      <ModalSectionBg onClick={closeModalHandlerClick} data-testid="modal-bg"/>
+    <ModalSection $isopen={isOpen.toString()} $zIndex={historyIndex}>
+      <ModalSectionBg onClick={closeModalHandlerClick} data-testid="modal-bg" />
       <ModalCard $isopen={isOpen.toString()}>
-        <ModalCardCloseButton onClick={closeModalHandlerClick} data-testid="modal-close-button"/>
+        <ModalCardCloseButton
+          onClick={closeModalHandlerClick}
+          data-testid="modal-close-button"
+        />
         {children}
       </ModalCard>
     </ModalSection>
