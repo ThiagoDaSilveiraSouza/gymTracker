@@ -1,4 +1,4 @@
-import { Modal } from "../../../Modal/Modal";
+import { MainModal } from "../../../MainModal/MainModal";
 import {
   Button,
   ButtonContainer,
@@ -21,7 +21,7 @@ export const ExerciseModal = () => {
   } = UseExerciseModal();
 
   return (
-    <Modal
+    <MainModal
       modalName="ExerciseModal"
       onOpen={updateModalOnOpen}
       onClose={updateModalOnClose}
@@ -53,6 +53,6 @@ export const ExerciseModal = () => {
           <Button $type="confirm">Salvar</Button>
         </ButtonContainer>
       </Form>
-    </Modal>
+    </MainModal>
   );
 };

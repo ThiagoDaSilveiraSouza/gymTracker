@@ -1,2 +1,2 @@
-export * from "./ExerciseModal"
-export * from "./SeriesModal"
+export * from "./ExerciseModal";
+export * from "./SeriesModal";

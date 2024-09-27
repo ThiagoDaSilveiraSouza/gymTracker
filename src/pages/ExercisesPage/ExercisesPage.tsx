@@ -1,32 +1,16 @@
-import styled from "styled-components";
-import { Button, ButtonContainer, PageTitle } from "../../styled-components";
+import {
+  Button,
+  ButtonContainer,
+  ListContainer,
+  ListRow,
+  ListRowItem,
+  PageTitle,
+} from "../../styled-components";
 import { useExercisesStore } from "../../store";
 import { IoIosAdd } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useModalStore } from "../../store/useModalsStore";
-const ListContainer = styled.div`
-  display: flex;
-  overflow: auto;
-  flex-wrap: wrap;
-  gap: 10px;
-  box-sizing: border-box;
-  margin: 30px 0 0;
-`;
-
-const ExerciseRow = styled.div`
-  flex: 1 1 100%;
-  display: flex;
-  align-items: center;
-  background-color: var(--ligth-color-2);
-  padding: 5px;
-  span {
-    color: var(--dark-color-2);
-    font-weight: 400;
-    font-size: 14px;
-    flex: 1 1;
-  }
-`;
 
 export const ExercisesPage = () => {
   const { updateModalIsOpen } = useModalStore();
@@ -56,22 +40,24 @@ export const ExercisesPage = () => {
           const { id, name } = currentExercise;
 
           return (
-            <ExerciseRow key={id}>
-              <span>{name}</span>
-              <ButtonContainer $margintop={"none"} $flex="0 1 auto">
-                <Button
-                  onClick={() => {
-                    setAciveToEditExercise(currentExercise);
-                    updateModalIsOpen("ExerciseModal", true);
-                  }}
-                >
-                  <CiEdit />
-                </Button>
-                <Button onClick={() => removeExercise(id)} $type="delete">
-                  <RiDeleteBinLine />
-                </Button>
-              </ButtonContainer>
-            </ExerciseRow>
+            <ListRow key={id}>
+              <ListRowItem>{name}</ListRowItem>
+              <ListRowItem>
+                <ButtonContainer $margintop={"none"} $flex="0 1 auto">
+                  <Button
+                    onClick={() => {
+                      setAciveToEditExercise(currentExercise);
+                      updateModalIsOpen("ExerciseModal", true);
+                    }}
+                  >
+                    <CiEdit />
+                  </Button>
+                  <Button onClick={() => removeExercise(id)} $type="delete">
+                    <RiDeleteBinLine />
+                  </Button>
+                </ButtonContainer>
+              </ListRowItem>
+            </ListRow>
           );
         })}
       </ListContainer>

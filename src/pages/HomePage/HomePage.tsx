@@ -1,7 +1,9 @@
+import { PageTitle } from "../../styled-components";
+
 export const HomePage = () => {
   return (
-    <section className="page-section">
-      <h1>Homepage</h1>
+    <section className="page-section centralizer">
+      <PageTitle>Home Page</PageTitle>
     </section>
   );
 };

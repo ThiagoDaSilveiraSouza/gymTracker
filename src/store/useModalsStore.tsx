@@ -12,11 +12,11 @@ type ModalsStore = {
 
 const defaultModalsStatus: ModalsStore = {
   ExerciseModal: {
-    isOpen: true,
+    isOpen: false,
     historyIndex: -1,
   },
   SeriesModal: {
-    isOpen: false,
+    isOpen: true,
     historyIndex: -1,
   },
 };
@@ -40,9 +40,7 @@ export const useModalStore = create<UseModalStoreType>((set) => {
     );
   };
   const getModalHistoryIndex = (modalName: ModalsNamesType) =>
-    history
-      .reverse()
-      .findIndex((currentModalName) => currentModalName === modalName);
+    history.findIndex((currentModalName) => currentModalName === modalName);
 
   return {
     status: defaultModalsStatus,
@@ -52,6 +50,9 @@ export const useModalStore = create<UseModalStoreType>((set) => {
         const updatedIsOpen =
           isOpen !== undefined ? isOpen : !prevState.status[modalName].isOpen;
         updatedIsOpen ? addToHistory(modalName) : removeFromHistory(modalName);
+        const modalIndex = getModalHistoryIndex(modalName);
+        console.log(`${modalName} index: `, modalIndex);
+        console.log(`history: `, history);
 
         return {
           ...prevState,

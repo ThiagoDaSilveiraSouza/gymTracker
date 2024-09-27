@@ -3,6 +3,7 @@ import { HamburgerButton } from "./components";
 import useMenuStore from "../../store/useMenuStore";
 import { IoHomeOutline } from "react-icons/io5";
 import { CgGym } from "react-icons/cg";
+import { RiFileListLine } from "react-icons/ri";
 import { Aside, BgContent, ButtonContainer, LinkContainer } from "./style";
 
 export const SideMenu = () => {
@@ -14,6 +15,11 @@ export const SideMenu = () => {
       name: "Exercícios",
       path: "/exercicios",
       icon: <CgGym size="40px" />,
+    },
+    SeriesPage: {
+      name: "Séries",
+      path: "/series",
+      icon: <RiFileListLine size="40px" />,
     },
   };
   const sortedPagesNames = Object.entries(PagesPath).sort(
